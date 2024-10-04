@@ -1,0 +1,1062 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CE - LAB KKU 360°</title>
+    <link href="assets/img/logo.png" rel="icon">
+    <link href="assets/img/logo.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #panorama {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/img/cephoto.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #play-button {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: none;
+            border-radius: 50%;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 230px;
+        }
+
+        #play-button i {
+            font-size: 3em;
+            color: rgb(255, 255, 255);
+        }
+
+        #play-button:hover {
+            transform: scale(1.1);
+        }
+
+        #loading-footer {
+            text-align: center;
+            margin-top: 50px;
+            color: rgb(255, 255, 255);
+        }
+
+        #loading-footer img {
+            width: 100px;
+            margin-top: 20px;
+        }
+        #llogo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            z-index: 1000;
+        }
+        .custom-hotspot {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        .custom-hotspot i {
+            color: white;
+            font-size: 2em;
+            z-index: 2;
+        }
+
+        .custom-hotspot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            animation: pulse 1.5s infinite;
+            z-index: 1;
+        }
+        .pnlm-fullscreen-toggle-button {
+            display: none;
+        }
+        
+        .pnlm-load-button {
+            display: none;  
+        }
+        #custom-fullscreen-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        #custom-fullscreen-button i {
+            color: white;
+            font-size: 1.5em;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+        .pnlm-orientation-button {
+            display: none !important; 
+        }
+    </style>
+</head>
+<body>
+    <img id="llogo" src="assets/img/logo.png" alt="Logo">
+    <div id="panorama"></div>
+    <div id="loading-screen">
+        <button id="play-button">
+            <i class="fa-solid fa-play"></i> 
+        </button>
+        <div id="loading-footer">
+            <img id="logo" src="assets/img/logo.png" alt="Logo"> 
+            <h1>CE - LAB KKU 360°</h1>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+        </div>
+
+    </div>
+    <button id="custom-fullscreen-button">
+        <i class="fa-solid fa-expand"></i>
+    </button>
+<script>
+    pannellum.viewer('panorama', {
+        "default": {
+            "firstScene": "scene12",
+            "autoLoad": true,
+            "sceneFadeDuration": 1000,
+            "showZoomCtrl": false, 
+            "showFullscreenCtrl": false,
+            "compass": false,
+
+        },
+        "scenes": {
+            "scene1": {
+                "hfov": 110,
+                "pitch": -1.5,
+                "yaw": 230,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano1.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -3.5,
+                        "yaw": 230,
+                        "type": "scene",
+                        "sceneId": "scene2",
+                        "cssClass": "custom-hotspot",  
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -8.5,
+                        "yaw": 40,
+                        "type": "scene",
+                        "sceneId": "scene13",
+                        "cssClass": "custom-hotspot",  
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene2": {
+                "hfov": 110,
+                "yaw": 90,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano2.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 90,
+                        "type": "scene",
+                        "sceneId": "scene3",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 270,
+                        "type": "scene",
+                        "sceneId": "scene1",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene3": {
+                "hfov": 120,
+                "yaw": 270,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano3.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 270,
+                        "type": "scene",
+                        "sceneId": "scene4",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon);  
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -12.0,
+                        "yaw": 365,
+                        "type": "scene",
+                        "sceneId": "scene2",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon);  
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene4": {
+                "hfov": 120,
+                "yaw": -8,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano4.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -1.0,
+                        "yaw": -8,
+                        "type": "scene",
+                        "sceneId": "scene5",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -1.0,
+                        "yaw": 65,
+                        "type": "scene",
+                        "sceneId": "scene3",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -3.0,
+                        "yaw": 250,
+                        "type": "scene",
+                        "sceneId": "scene14",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene5": {
+                "hfov": 120,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano5.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 180,
+                        "type": "scene",
+                        "sceneId": "scene6",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": 6,
+                        "type": "scene",
+                        "sceneId": "scene4",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -3.0,
+                        "yaw": 76,
+                        "type": "scene",
+                        "sceneId": "scene15",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene6": {
+                "hfov": 120,
+                "yaw": 340,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano6.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -8.0,
+                        "yaw": 340,
+                        "type": "scene",
+                        "sceneId": "scene7",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 180,
+                        "type": "scene",
+                        "sceneId": "scene16",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 155,
+                        "type": "scene",
+                        "sceneId": "scene5",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene7": {
+                "hfov": 120,
+                "yaw": 195,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano7.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -7.0,
+                        "yaw": 20,
+                        "type": "scene",
+                        "sceneId": "scene6",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 195,
+                        "type": "scene",
+                        "sceneId": "scene8",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": -60,
+                        "type": "scene",
+                        "sceneId": "scene12",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene8": {
+                "hfov": 120,
+                "yaw": 160,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano8.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -17.0,
+                        "yaw": 160,
+                        "type": "scene",
+                        "sceneId": "scene9",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 250,
+                        "type": "scene",
+                        "sceneId": "scene7",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene9": {
+                "hfov": 120,
+                "yaw": 50,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano9.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -1.0,
+                        "yaw": 340,
+                        "type": "scene",
+                        "sceneId": "scene17",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -15.0,
+                        "yaw": 230,
+                        "type": "scene",
+                        "sceneId": "scene8",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 50,
+                        "type": "scene",
+                        "sceneId": "scene10",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene10": {
+                "hfov": 120,
+                "yaw": 135,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano10.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 135,
+                        "type": "scene",
+                        "sceneId": "scene19",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 70,
+                        "type": "scene",
+                        "sceneId": "scene18",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -11.0,
+                        "yaw": 225,
+                        "type": "scene",
+                        "sceneId": "scene11",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -10.0,
+                        "yaw": 315,
+                        "type": "scene",
+                        "sceneId": "scene9",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene11": {
+                "hfov": 110,
+                "pitch": -1.5,
+                "yaw": 80,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano11.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -1.5,
+                        "yaw": 80,
+                        "type": "scene",
+                        "sceneId": "scene12",
+                        "cssClass": "custom-hotspot",  
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -9.0,
+                        "yaw": 278,
+                        "type": "scene",
+                        "sceneId": "scene10",
+                        "cssClass": "custom-hotspot",  
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 410,
+                        "type": "scene",
+                        "sceneId": "scene21",
+                        "cssClass": "custom-hotspot",  
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": 316,
+                        "type": "scene",
+                        "sceneId": "scene20",
+                        "cssClass": "custom-hotspot",  
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene12": {
+                "hfov": 110,
+                "yaw": 190,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano12.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -11.0,
+                        "yaw": 190,
+                        "type": "scene",
+                        "sceneId": "scene13",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": -17,
+                        "type": "scene",
+                        "sceneId": "scene11",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -5.0,
+                        "yaw": -80,
+                        "type": "scene",
+                        "sceneId": "scene7",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene13": {
+                "hfov": 120,
+                "yaw": 295,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano13.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -8.0,
+                        "yaw": 295,
+                        "type": "scene",
+                        "sceneId": "scene1",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon);  
+                        },
+                        "createTooltipArgs": {}
+                    },
+                    {
+                        "pitch": -8.0,
+                        "yaw": 115,
+                        "type": "scene",
+                        "sceneId": "scene12",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon);  
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene14": {
+                "hfov": 120,
+                "yaw": 20,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano14.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 201,
+                        "type": "scene",
+                        "sceneId": "scene4",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene15": {
+                "hfov": 120,
+                "yaw": 50,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano15.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 160,
+                        "type": "scene",
+                        "sceneId": "scene5",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene16": {
+                "hfov": 120,
+                "yaw": 240,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano16.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -3.0,
+                        "yaw": 370,
+                        "type": "scene",
+                        "sceneId": "scene6",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                    
+                ]
+            },
+            "scene17": {
+                "hfov": 120,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano17.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 10,
+                        "type": "scene",
+                        "sceneId": "scene9",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = ''; 
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene18": {
+                "hfov": 120,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano18.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -1.0,
+                        "yaw": 340,
+                        "type": "scene",
+                        "sceneId": "scene10",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene19": {
+                "hfov": 120,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano19.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -3.0,
+                        "yaw": 10,
+                        "type": "scene",
+                        "sceneId": "scene10",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene20": {
+                "hfov": 120,
+                "yaw": 150,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano20.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -6.0,
+                        "yaw": 327,
+                        "type": "scene",
+                        "sceneId": "scene11",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            },
+            "scene21": {
+                "hfov": 120,
+                "yaw": 280,
+                "type": "equirectangular",
+                "panorama": "/assets/img/pano/pano21.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": -5.0,
+                        "yaw": 100,
+                        "type": "scene",
+                        "sceneId": "scene11",
+                        "targetYaw": -23,
+                        "targetPitch": 2,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": function(hotSpotDiv, args) {
+                            hotSpotDiv.innerHTML = '';  
+                            const icon = document.createElement('i');
+                            icon.className = 'fas fa-arrow-alt-circle-up';
+                            hotSpotDiv.appendChild(icon); 
+                        },
+                        "createTooltipArgs": {}
+                    }
+                ]
+            }
+            
+        }
+    });
+
+    document.getElementById('play-button').addEventListener('click', function() {
+        document.getElementById('loading-screen').style.display = 'none';
+    });
+
+    document.getElementById('custom-fullscreen-button').addEventListener('click', function() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
